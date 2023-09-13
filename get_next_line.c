@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/13 15:09:44 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/13 16:00:37 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,21 +64,35 @@ char	*ft_cleanup_string(char *line)
 
 char	*ft_store_string(char *static_storage)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*temp;
 
 	i = 0;
-	while (current_string[i] != '\n')
+	while (static_storage[i] != '\n')
 		i++;
 	i++;
 	j = 0;
-	static_storage = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	while (current_string[i])
+	temp = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	while (static_storage[i])
 	{
-		static_storage[j] = current_string[i];
+		temp[j] = static_storage[i];
 		j++;
 		i++;
 	}
+	printf("%s\n", temp);
+	temp[j] = '\0';
+	i = 0;
+	while (temp[i])
+	{
+		static_storage[i] = temp[i];
+		i++;
+	}
+	printf("%s\n", static_storage);
+	while (static_storage[i++])
+		static_storage[i] = 0;
+	static_storage[i] = '\0';
+	free(temp);
 	return (static_storage);
 }
 
@@ -89,21 +103,21 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	static_storage = ft_fill_string(fd, static_storage);//step 1
+	static_storage = ft_fill_string(fd, static_storage);
 	if (!static_storage)
 		return (NULL);
-	line = ft_cleanup_string(static_storage);//step 2
-	printf("stat_stor: %s\n", static_storage);
+	line = ft_cleanup_string(static_storage);
 	static_storage = ft_store_string(static_storage);
-	printf("stat_stor: %s\n", static_storage);
 	return (line);
 }
 
-int main(void)
+int	main(void)
 {
 	int fd = open("test.txt", O_RDONLY);
-	char *s = "heyy";
+	char *s = "";
 
+	s = get_next_line(fd);
+	printf("LINE: %s", s);
 	s = get_next_line(fd);
 	printf("LINE: %s", s);
 	s = get_next_line(fd);
