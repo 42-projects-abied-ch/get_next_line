@@ -6,52 +6,78 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/13 09:28:41 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/13 12:21:46 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+char	*ft_fill_string(int fd, char *s)
 {
-	int		i;
-	char	current;
-	char	*str;
-	ssize_t	byte_read;
+	char	*buffer;
+	ssize_t	buffer_read;
 
-	i = 0;
-	str = malloc(1);
-	if (!str)
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
 		return (NULL);
-	byte_read = 1;
-	while (byte_read)
+	buffer_read = 1;
+	while (!(ft_strchr(s, '\n')) && buffer_read != 0)
 	{
-		byte_read = read(fd, &current, 1);
-		if (!byte_read && !str)
+		buffer_read = read(fd, buffer, BUFFER_SIZE);
+		if (buffer_read == -1)
 		{
-			free (str);
+			free(buffer);
 			return (NULL);
 		}
-		str[i] = current;
-		if (str[i] == '\n')
-			return (str);
-		i++;
-		str = ft_realloc_string(str, 1);
+		buffer[buffer_read] = '\0';
+		s = ft_strjoin(s, buffer);
 	}
-	return (str);
+	free (buffer);
+	return (s);
+}
+
+char	*ft_trim_string(char *res, char *s)
+{
+	int	i;
+
+	i = 0;
+	while (*res != '\n')
+	{
+		res++;
+		if (*res == '\n')
+		{
+			
+			while(*res)
+			{
+				s[i] = res[i];
+				
+			}
+		}	
+	}
+	return (res);
+}
+
+char	*get_next_line(int fd)
+{
+	char	*res;
+	char	*s = malloc(0);
+
+	if (fd <= 0 || BUFFER_SIZE == 0)
+		return (NULL);
+	res = ft_fill_string(fd, s);
+	if (!res)
+		return (NULL);
+	s = malloc((ft_strlen(res) + 1) * sizeof(char));
+	res = ft_trim_string(res, s);
+	return (res);
 }
 
 int main(void)
 {
 	int fd = open("test.txt", O_RDONLY);
-	char *s = "heyy";
-	int i = 0;
-	
-	while (i < 6)
-	{
-		s = get_next_line(fd);
-		printf("LINE %d: %s", i, s);
-		i++;
-	}
+	const char *s = "heyy";
+
+	s = get_next_line(fd);
+	printf("LINE: %s", s);
 	return (0);
 }
