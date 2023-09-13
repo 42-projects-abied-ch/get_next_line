@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/13 17:47:42 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/13 17:49:55 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int fd = open("test.txt", O_RDONLY);
 	char *s = "";
@@ -124,4 +124,4 @@ int	main(void)
 	s = get_next_line(fd);
 	printf("LINE: %s", s);
 	return (0);
-}
+}*/
