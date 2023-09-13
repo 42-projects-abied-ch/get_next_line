@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/13 16:00:37 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/13 17:47:42 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ char	*ft_fill_string(int fd, char *static_storage)
 		buffer_read = read(fd, buffer, BUFFER_SIZE);
 		if (buffer_read == -1)
 		{
-			free(buffer);
-			return (NULL);
+			return (free(buffer), NULL);
 		}
 		buffer[buffer_read] = '\0';
 		static_storage = ft_strjoin(static_storage, buffer);
@@ -42,10 +41,12 @@ char	*ft_cleanup_string(char *line)
 	char	*clean;
 
 	i = 0;
-	while (line[i] != '\n')
+	while (line[i] != '\0' && line[i] != '\n')
 	{
 		i++;
 	}
+	if (line[i])
+		i++;
 	clean = malloc((i + 1) * sizeof(char));
 	if (!clean)
 	{
@@ -53,11 +54,13 @@ char	*ft_cleanup_string(char *line)
 		return (NULL);
 	}
 	i = 0;
-	while (line[i] != '\n')
+	while (line[i] != '\n' && line[i] != '\0')
 	{
 		clean[i] = line[i];
 		i++;
 	}
+	if (line[i])
+		clean[i] = line[i];
 	clean[i] = line[i];
 	return (clean);
 }
@@ -69,7 +72,7 @@ char	*ft_store_string(char *static_storage)
 	char	*temp;
 
 	i = 0;
-	while (static_storage[i] != '\n')
+	while (static_storage[i] != '\n' && static_storage[i] != '\0')
 		i++;
 	i++;
 	j = 0;
@@ -80,7 +83,6 @@ char	*ft_store_string(char *static_storage)
 		j++;
 		i++;
 	}
-	printf("%s\n", temp);
 	temp[j] = '\0';
 	i = 0;
 	while (temp[i])
@@ -88,9 +90,8 @@ char	*ft_store_string(char *static_storage)
 		static_storage[i] = temp[i];
 		i++;
 	}
-	printf("%s\n", static_storage);
-	while (static_storage[i++])
-		static_storage[i] = 0;
+	while (static_storage[i])
+		static_storage[i++] = 0;
 	static_storage[i] = '\0';
 	free(temp);
 	return (static_storage);
