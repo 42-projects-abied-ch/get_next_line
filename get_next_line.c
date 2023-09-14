@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/14 16:50:11 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:02:07 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*ft_cleanup_string(char *line)
 		i++;
 	}
 	clean[i] = line[i];
+	free(line);
 	clean[++i] = '\0';
 	return (clean);
 }
@@ -101,7 +102,10 @@ char	*get_next_line(int fd)
 	line = ft_cleanup_string(static_storage);
 	static_storage = ft_store_string(static_storage);
 	if (line[0] == '\0')
+	{
+		free(static_storage);
 		return (NULL);
+	}
 	return (line);
 }
 
@@ -113,7 +117,8 @@ char	*get_next_line(int fd)
 	for (int i = 0; i < 10; i++){
 	printf("LINE %d: ", i);
 	s = get_next_line(fd);
+	free(s);
 	printf("|%s|", s);}
-	
+	free(s);
 	return (0);
 }*/
