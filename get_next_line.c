@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/14 16:36:01 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:50:11 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,14 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!static_storage)
-    	static_storage = ft_fill_string(fd, NULL);
-    static_storage = ft_fill_string(fd, static_storage);
+		static_storage = ft_fill_string(fd, NULL);
+	static_storage = ft_fill_string(fd, static_storage);
 	if (!static_storage)
 		return (NULL);
 	line = ft_cleanup_string(static_storage);
 	static_storage = ft_store_string(static_storage);
+	if (line[0] == '\0')
+		return (NULL);
 	return (line);
 }
 
@@ -108,10 +110,10 @@ char	*get_next_line(int fd)
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
 
-	for (int i = 0; i < 5; i++){
+	for (int i = 0; i < 10; i++){
 	printf("LINE %d: ", i);
 	s = get_next_line(fd);
-	printf("%s", s);}
+	printf("|%s|", s);}
 	
 	return (0);
 }*/
