@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/14 19:32:25 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:15:56 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ char	*ft_cleanup_string(char *line)
 		i++;
 	}
 	clean[i] = line[i];
-	clean[i] = '\0';
+	free(line);
+	clean[++i] = '\0';
 	return (clean);
 }
 
@@ -66,8 +67,6 @@ char	*ft_store_string(char *static_storage)
 	char	*temp;
 
 	i = 0;
-	if (static_storage[0] == '\0')
-		return (NULL);
 	while (static_storage[i] != '\n' && static_storage[i] != '\0')
 		i++;
 	i++;
@@ -101,12 +100,16 @@ char	*get_next_line(int fd)
 	if (!static_storage)
 		return (NULL);
 	line = ft_cleanup_string(static_storage);
-	printf("|%s|\n", line);
 	static_storage = ft_store_string(static_storage);
+	if (line[0] == '\0')
+	{
+		free(static_storage);
+		return (NULL);
+	}
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
@@ -118,4 +121,4 @@ int	main(void)
 	//printf("|%s|", s);
 	}
 	return (0);
-}
+}*/
