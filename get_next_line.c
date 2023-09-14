@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/13 17:49:55 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:13:06 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_fill_string(int fd, char *static_storage)
 	char	*buffer;
 	ssize_t	buffer_read;
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
 		return (NULL);
 	buffer_read = 1;
@@ -45,7 +45,7 @@ char	*ft_cleanup_string(char *line)
 		i++;
 	if (line[i])
 		i++;
-	clean = malloc((i + 1) * sizeof(char));
+	clean = ft_calloc((i + 1), sizeof(char));
 	if (!clean)
 		return (free(line), NULL);
 	i = 0;
@@ -70,7 +70,7 @@ char	*ft_store_string(char *static_storage)
 		i++;
 	i++;
 	j = 0;
-	temp = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	temp = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	while (static_storage[i])
 		temp[j++] = static_storage[i++];
 	temp[j] = '\0';
@@ -104,7 +104,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*int	main(void)
+int	main(void)
 {
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
@@ -114,4 +114,4 @@ char	*get_next_line(int fd)
 	printf("%s", s);}
 	
 	return (0);
-}*/
+}
