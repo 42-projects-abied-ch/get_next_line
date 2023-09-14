@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/14 17:15:56 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/14 20:19:53 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_cleanup_string(char *line)
 		i++;
 	if (line[i])
 		i++;
-	clean = ft_calloc((i), sizeof(char));
+	clean = ft_calloc((i + 1), sizeof(char));
 	if (!clean)
 		return (free(line), NULL);
 	i = 0;
@@ -55,7 +55,6 @@ char	*ft_cleanup_string(char *line)
 		i++;
 	}
 	clean[i] = line[i];
-	free(line);
 	clean[++i] = '\0';
 	return (clean);
 }
@@ -95,8 +94,8 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!static_storage)
-		static_storage = ft_fill_string(fd, NULL);
-	static_storage = ft_fill_string(fd, static_storage);
+    	static_storage = ft_fill_string(fd, NULL);
+    static_storage = ft_fill_string(fd, static_storage);
 	if (!static_storage)
 		return (NULL);
 	line = ft_cleanup_string(static_storage);
@@ -109,16 +108,16 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*int	main(void)
+int	main(void)
 {
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
 
-	for (int i = 0; i < 2; i++){
+	for (int i = 0; i < 4; i++){
 	printf("LINE %d: ", i);
 	s = get_next_line(fd);
-	free(s);
-	//printf("|%s|", s);
+	//free(s);
+	printf("%s", s);
 	}
 	return (0);
-}*/
+}
