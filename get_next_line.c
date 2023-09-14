@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/14 17:02:07 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:15:56 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_cleanup_string(char *line)
 		i++;
 	if (line[i])
 		i++;
-	clean = ft_calloc((i + 1), sizeof(char));
+	clean = ft_calloc((i), sizeof(char));
 	if (!clean)
 		return (free(line), NULL);
 	i = 0;
@@ -109,7 +109,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*int	main(void)
+int	main(void)
 {
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
@@ -121,4 +121,4 @@ char	*get_next_line(int fd)
 	printf("|%s|", s);}
 	free(s);
 	return (0);
-}*/
+}
