@@ -6,11 +6,38 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:25:27 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/13 15:29:36 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:08:50 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	*ft_memset(void *s, int x, size_t n)
+{
+	unsigned char	*p;
+
+	p = (unsigned char *)s;
+	while (n--)
+		*p++ = (unsigned char)x;
+	return (s);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*dest;
+
+	dest = NULL;
+	if (nmemb == 0 || size == 0)
+		return (malloc(0));
+	if ((size * nmemb) / nmemb != size)
+		return (NULL);
+	dest = malloc(nmemb * size);
+	if (dest == NULL)
+		return (NULL);
+	if (dest)
+		ft_memset(dest, 0, size * nmemb);
+	return (dest);
+}
 
 size_t	ft_strlen(const char *s)
 {

@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:23:57 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/13 15:29:40 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:10:51 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_memset(void *s, int x, size_t n);
 
 #endif
