@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/14 16:13:06 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:36:01 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_fill_string(int fd, char *static_storage)
 
 	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return (free(buffer), NULL);
 	buffer_read = 1;
 	while (!(ft_strchr(static_storage, '\n')) && buffer_read != 0)
 	{
@@ -27,7 +27,7 @@ char	*ft_fill_string(int fd, char *static_storage)
 		if (buffer_read == -1)
 			return (free(buffer), NULL);
 		if (buffer_read == 0)
-			break;
+			break ;
 		buffer[buffer_read] = '\0';
 		static_storage = ft_strjoin(static_storage, buffer);
 	}
@@ -71,15 +71,14 @@ char	*ft_store_string(char *static_storage)
 	i++;
 	j = 0;
 	temp = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (!temp)
+		return (free(temp), NULL);
 	while (static_storage[i])
 		temp[j++] = static_storage[i++];
 	temp[j] = '\0';
-	i = 0;
-	while (temp[i])
-	{
+	i = -1;
+	while (temp[++i])
 		static_storage[i] = temp[i];
-		i++;
-	}
 	while (static_storage[i])
 		static_storage[i++] = '\0';
 	static_storage[i] = '\0';
@@ -109,7 +108,8 @@ char	*get_next_line(int fd)
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
 
-	for (int i = 0; i < 6; i++){
+	for (int i = 0; i < 5; i++){
+	printf("LINE %d: ", i);
 	s = get_next_line(fd);
 	printf("%s", s);}
 	
