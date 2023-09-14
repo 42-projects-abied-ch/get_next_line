@@ -42,17 +42,12 @@ char	*ft_cleanup_string(char *line)
 
 	i = 0;
 	while (line[i] != '\0' && line[i] != '\n')
-	{
 		i++;
-	}
 	if (line[i])
 		i++;
 	clean = malloc((i + 1) * sizeof(char));
 	if (!clean)
-	{
-		free(line);
-		return (NULL);
-	}
+		return (free(line), NULL);
 	i = 0;
 	while (line[i] != '\n' && line[i] != '\0')
 	{
@@ -108,7 +103,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
@@ -120,4 +115,4 @@ int	main(void)
 	s = get_next_line(fd);
 	printf("%s", s);
 	return (0);
-}
+}*/
