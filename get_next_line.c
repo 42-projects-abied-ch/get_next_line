@@ -25,9 +25,9 @@ char	*ft_fill_string(int fd, char *static_storage)
 	{
 		buffer_read = read(fd, buffer, BUFFER_SIZE);
 		if (buffer_read == -1)
-		{
 			return (free(buffer), NULL);
-		}
+		if (buffer_read == 0)
+			break;
 		buffer[buffer_read] = '\0';
 		static_storage = ft_strjoin(static_storage, buffer);
 	}
@@ -54,9 +54,8 @@ char	*ft_cleanup_string(char *line)
 		clean[i] = line[i];
 		i++;
 	}
-	if (line[i])
-		clean[i] = line[i];
 	clean[i] = line[i];
+	clean[++i] = '\0';
 	return (clean);
 }
 
@@ -82,7 +81,7 @@ char	*ft_store_string(char *static_storage)
 		i++;
 	}
 	while (static_storage[i])
-		static_storage[i++] = 0;
+		static_storage[i++] = '\0';
 	static_storage[i] = '\0';
 	free(temp);
 	return (static_storage);
@@ -95,7 +94,9 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	static_storage = ft_fill_string(fd, static_storage);
+	if (!static_storage)
+    	static_storage = ft_fill_string(fd, NULL);
+    static_storage = ft_fill_string(fd, static_storage);
 	if (!static_storage)
 		return (NULL);
 	line = ft_cleanup_string(static_storage);
@@ -108,11 +109,9 @@ char	*get_next_line(int fd)
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
 
+	for (int i = 0; i < 6; i++){
 	s = get_next_line(fd);
-	printf("%s", s);
-	s = get_next_line(fd);
-	printf("%s", s);
-	s = get_next_line(fd);
-	printf("%s", s);
+	printf("%s", s);}
+	
 	return (0);
 }*/
