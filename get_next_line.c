@@ -78,11 +78,7 @@ char	*ft_store_string(char *static_storage)
 	j = 0;
 	temp = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	while (static_storage[i])
-	{
-		temp[j] = static_storage[i];
-		j++;
-		i++;
-	}
+		temp[j++] = static_storage[i++];
 	temp[j] = '\0';
 	i = 0;
 	while (temp[i])
@@ -112,16 +108,16 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*int	main(void)
+int	main(void)
 {
-	int fd = open("test.txt", O_RDONLY);
+	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
 
 	s = get_next_line(fd);
-	printf("LINE: %s", s);
+	printf("%s", s);
 	s = get_next_line(fd);
-	printf("LINE: %s", s);
+	printf("%s", s);
 	s = get_next_line(fd);
-	printf("LINE: %s", s);
+	printf("%s", s);
 	return (0);
-}*/
+}
