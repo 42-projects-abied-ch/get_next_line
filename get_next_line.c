@@ -104,7 +104,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
@@ -114,4 +114,4 @@ int	main(void)
 	printf("%s", s);}
 	
 	return (0);
-}
+}*/
