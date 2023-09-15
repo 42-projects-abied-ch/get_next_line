@@ -57,24 +57,20 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	s1_len;
 	int		i;
 
-	if (!s1)
-	{
-		s1 = (char *)malloc(1 * sizeof(char));
-		if (!s1)
-			return (NULL);
-		s1[0] = '\0';
-	}
 	s1_len = ft_strlen(s1);
 	i = -1;
 	dest = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (dest == NULL)
 		return (0);
-	while (s1[++i])
-		dest[i] = s1[i];
+	if (s1)
+	{
+		while (s1[++i])
+			dest[i] = s1[i];
+		free(s1);
+	}
 	i = -1;
 	while (s2[++i])
 		dest[s1_len++] = s2[i];
-	free(s1);
 	dest[s1_len] = '\0';
 	return (dest);
 }

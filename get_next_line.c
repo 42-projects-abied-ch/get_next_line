@@ -25,13 +25,13 @@ char	*ft_fill_string(int fd, char *static_storage)
 	{
 		buffer_read = read(fd, buffer, BUFFER_SIZE);
 		if (buffer_read == -1)
-			return (free(buffer), NULL);
+			return (free(buffer), free(static_storage), NULL);
 		if (buffer_read == 0)
 			break ;
 		buffer[buffer_read] = '\0';
 		static_storage = ft_strjoin(static_storage, buffer);
 	}
-	free (buffer);
+	free(buffer);
 	return (static_storage);
 }
 
@@ -45,9 +45,9 @@ char	*ft_cleanup_string(char *line)
 		i++;
 	if (line[i])
 		i++;
-	clean = ft_calloc((i), sizeof(char));
+	clean = ft_calloc((i + 1), sizeof(char));
 	if (!clean)
-		return (free(line), NULL);
+		return (NULL);
 	i = 0;
 	while (line[i] != '\n' && line[i] != '\0')
 	{
@@ -55,8 +55,8 @@ char	*ft_cleanup_string(char *line)
 		i++;
 	}
 	clean[i] = line[i];
-	free(line);
-	clean[++i] = '\0';
+	if (line[i])
+		clean[++i] = '\0';
 	return (clean);
 }
 
@@ -69,7 +69,8 @@ char	*ft_store_string(char *static_storage)
 	i = 0;
 	while (static_storage[i] != '\n' && static_storage[i] != '\0')
 		i++;
-	i++;
+	if (static_storage[i])
+		i++;
 	j = 0;
 	temp = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!temp)
@@ -103,7 +104,7 @@ char	*get_next_line(int fd)
 	static_storage = ft_store_string(static_storage);
 	if (line[0] == '\0')
 	{
-		free(static_storage);
+		free(line);
 		return (NULL);
 	}
 	return (line);
