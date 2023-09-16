@@ -19,7 +19,7 @@ char	*ft_fill_string(int fd, char *static_storage)
 
 	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
-		return (free(buffer), NULL);
+		return (NULL);
 	buffer_read = 1;
 	while (!(ft_strchr(static_storage, '\n')) && buffer_read != 0)
 	{
@@ -74,7 +74,7 @@ char	*ft_store_string(char *static_storage)
 	j = 0;
 	temp = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!temp)
-		return (free(temp), NULL);
+		return (NULL);
 	while (static_storage[i])
 		temp[j++] = static_storage[i++];
 	temp[j] = '\0';
@@ -95,22 +95,21 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!static_storage)
-    	static_storage = ft_fill_string(fd, NULL);
-    static_storage = ft_fill_string(fd, static_storage);
+	static_storage = ft_fill_string(fd, static_storage);
 	if (!static_storage)
 		return (NULL);
 	line = ft_cleanup_string(static_storage);
 	static_storage = ft_store_string(static_storage);
 	if (line[0] == '\0')
 	{
+		free(static_storage);
 		free(line);
 		return (NULL);
 	}
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
@@ -122,4 +121,4 @@ int	main(void)
 	printf("%s", s);
 	}
 	return (0);
-}
+}*/
