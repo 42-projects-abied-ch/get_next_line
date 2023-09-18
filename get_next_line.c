@@ -12,35 +12,44 @@
 
 #include "get_next_line.h"
 
-char	*ft_fill_string(int fd, char *static_storage)
+static char	*ft_free(char *to_free, char *tmp)
+{
+	if (to_free)
+		free(to_free);
+	to_free = NULL;
+	if (tmp)
+	{
+		free(tmp);
+		tmp = NULL;
+	}
+	return (NULL);
+}
+
+static char	*ft_fill_string(int fd, char *static_storage)
 {
 	char	*buffer;
 	ssize_t	buffer_read;
 	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return (ft_free(static_storage, 0));
 	buffer_read = 1;
 	while (!(ft_strchr(static_storage, '\n')) && buffer_read != 0)
 	{
 		buffer_read = read(fd, buffer, BUFFER_SIZE);
-		if (buffer_read == -1)
-			return (free(buffer), free(static_storage), NULL);
+		if ((buffer_read == 0 && !static_storage) || buffer_read == -1)
+			return (ft_free(static_storage, buffer));
 		if (buffer_read == 0)
 			break ;
 		buffer[buffer_read] = '\0';
-		if (buffer[0] == '\0')
-		{
-			free (buffer);
-			return (NULL);
-		}
-		if (buffer)
-			static_storage = ft_strjoin(static_storage, buffer);
+		static_storage = ft_strjoin(static_storage, buffer);
+		if (!static_storage)
+			return(ft_free(static_storage, buffer));
 	}
 	free(buffer);
 	return (static_storage);
 }
 
-char	*ft_cleanup_string(char *line)
+static char	*ft_cleanup_string(char *line)
 {
 	int		i;
 	char	*clean;
@@ -65,7 +74,7 @@ char	*ft_cleanup_string(char *line)
 	return (clean);
 }
 
-char	*ft_store_string(char *static_storage)
+static char	*ft_store_string(char *static_storage)
 {
 	int		i;
 	int		j;
@@ -89,7 +98,7 @@ char	*ft_store_string(char *static_storage)
 	while (static_storage[i])
 		static_storage[i++] = '\0';
 	static_storage[i] = '\0';
-	free(temp);
+	ft_free(temp, 0);
 	return (static_storage);
 }
 
@@ -106,12 +115,9 @@ char	*get_next_line(int fd)
 	line = ft_cleanup_string(static_storage);
 	static_storage = ft_store_string(static_storage);
 	if (line[0] == '\0')
-	{
-		if (static_storage)
-			free(static_storage);
-		free(line);
+		return (ft_free(static_storage, line));
+	if (ft_strlen(line) == 0)
 		return (NULL);
-	}
 	return (line);
 }
 
