@@ -59,6 +59,8 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	s1_len = ft_strlen(s1);
 	i = -1;
+	if (!s1 && !s2)
+		return (NULL);
 	dest = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (dest == NULL)
 		return (0);

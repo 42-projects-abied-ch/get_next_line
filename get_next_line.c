@@ -16,7 +16,6 @@ char	*ft_fill_string(int fd, char *static_storage)
 {
 	char	*buffer;
 	ssize_t	buffer_read;
-
 	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
 		return (NULL);
@@ -29,7 +28,13 @@ char	*ft_fill_string(int fd, char *static_storage)
 		if (buffer_read == 0)
 			break ;
 		buffer[buffer_read] = '\0';
-		static_storage = ft_strjoin(static_storage, buffer);
+		if (buffer[0] == '\0')
+		{
+			free (buffer);
+			return (NULL);
+		}
+		if (buffer)
+			static_storage = ft_strjoin(static_storage, buffer);
 	}
 	free(buffer);
 	return (static_storage);
@@ -102,7 +107,8 @@ char	*get_next_line(int fd)
 	static_storage = ft_store_string(static_storage);
 	if (line[0] == '\0')
 	{
-		free(static_storage);
+		if (static_storage)
+			free(static_storage);
 		free(line);
 		return (NULL);
 	}
@@ -114,7 +120,7 @@ char	*get_next_line(int fd)
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
 
-	for (int i = 0; i < 4; i++){
+	for (int i = 0; i < 5; i++){
 	printf("LINE %d: ", i);
 	s = get_next_line(fd);
 	//free(s);
