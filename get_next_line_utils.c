@@ -12,33 +12,6 @@
 
 #include "get_next_line.h"
 
-void	*ft_memset(void *s, int x, size_t n)
-{
-	unsigned char	*p;
-
-	p = (unsigned char *)s;
-	while (n--)
-		*p++ = (unsigned char)x;
-	return (s);
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	void	*dest;
-
-	dest = NULL;
-	if (nmemb == 0 || size == 0)
-		return (malloc(0));
-	if ((size * nmemb) / nmemb != size)
-		return (NULL);
-	dest = malloc(nmemb * size);
-	if (dest == NULL)
-		return (NULL);
-	if (dest)
-		ft_memset(dest, 0, size * nmemb);
-	return (dest);
-}
-
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
@@ -51,46 +24,45 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *static_storage, char *buffer)
 {
 	char	*dest;
-	size_t	s1_len;
+	size_t	j;
 	int		i;
 
-	s1_len = ft_strlen(s1);
 	i = -1;
-	if (!s1 && !s2)
-		return (NULL);
-	dest = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (dest == NULL)
-		return (0);
-	if (s1)
+	j = 0;
+	if (!static_storage)
 	{
-		while (s1[++i])
-			dest[i] = s1[i];
-		free(s1);
+		static_storage = malloc(1 * sizeof(char));
+		static_storage[0] = '\0';
 	}
-	i = -1;
-	while (s2[++i])
-		dest[s1_len++] = s2[i];
-	dest[s1_len] = '\0';
+	if (!static_storage || !buffer)
+		return (NULL);
+	dest = malloc((ft_strlen(static_storage) + ft_strlen(buffer) + 1) * sizeof(char));
+	if (!dest)
+		return (NULL);
+	if (static_storage)
+		while (static_storage[++i])
+			dest[i] = static_storage[i];
+	while (buffer[j])
+		dest[i++] = buffer[j++];
+	dest[ft_strlen(static_storage) + ft_strlen(buffer)] = '\0';
+	free(static_storage);
 	return (dest);
 }
 
 char	*ft_strchr(char *s, int c)
 {
-	int	i;
-
-	i = 0;
 	if (!s)
 		return (0);
-	if (c == '\0')
-		return ((char *)&s[ft_strlen(s)]);
-	while (s[i] != '\0')
+	while (*s)
 	{
-		if (s[i] == (char) c)
-			return ((char *)&s[i]);
-		i++;
+		if (*s == c)
+			return ((char *)s);
+		s++;
 	}
+	if (c == '\0')
+		return ((char *)s);
 	return (0);
 }
