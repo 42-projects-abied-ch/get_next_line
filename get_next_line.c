@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/19 16:12:42 by codespace        ###   ########.fr       */
+/*   Updated: 2023/09/19 17:08:42 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ static char	*ft_fill_string(int fd, char *static_storage)
 		if (buffer)
 			static_storage = ft_strjoin(static_storage, buffer);
 		if (!static_storage)
-		{			
 			return (free(static_storage), free(buffer), NULL);
-		}	
 	}
 	free(buffer);
 	return (static_storage);
@@ -92,9 +90,7 @@ static char	*ft_store_string(char *static_storage)
 		temp[j++] = static_storage[i++];
 	temp[j] = '\0';
 	if (temp[0] == '\0')
-	{
 		return (free(temp), free(static_storage), NULL);
-	}
 	free(static_storage);
 	return (temp);
 }
@@ -110,7 +106,7 @@ char	*get_next_line(int fd)
 	if (!static_storage)
 	{
 		return (free (static_storage), NULL);
-	}	
+	}
 	line = ft_cleanup_string(static_storage);
 	static_storage = ft_store_string(static_storage);
 	return (line);
