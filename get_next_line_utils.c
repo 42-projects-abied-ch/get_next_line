@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:25:27 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/19 15:18:08 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/19 13:41:32 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ char	*ft_strjoin(char *st_sto, char *buf)
 	if (!st_sto)
 	{
 		st_sto = malloc(1 * sizeof(char));
+		if (!st_sto)
+			return (NULL);
 		st_sto[0] = '\0';
 	}
 	if (!st_sto || !buf)
 		return (NULL);
 	dest = malloc((ft_strlen(st_sto) + ft_strlen(buf) + 1) * sizeof(char));
 	if (!dest)
-		return (NULL);
+		return (free(st_sto), NULL);
 	if (st_sto)
 		while (st_sto[++i])
 			dest[i] = st_sto[i];
