@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/19 14:02:33 by codespace        ###   ########.fr       */
+/*   Updated: 2023/09/19 16:12:42 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ static char	*ft_fill_string(int fd, char *static_storage)
 		buffer[buffer_read] = '\0';
 		if (buffer)
 			static_storage = ft_strjoin(static_storage, buffer);
+		if (!static_storage)
+		{			
+			return (free(static_storage), free(buffer), NULL);
+		}	
 	}
 	free(buffer);
 	return (static_storage);
@@ -87,6 +91,10 @@ static char	*ft_store_string(char *static_storage)
 	while (static_storage[i])
 		temp[j++] = static_storage[i++];
 	temp[j] = '\0';
+	if (temp[0] == '\0')
+	{
+		return (free(temp), free(static_storage), NULL);
+	}
 	free(static_storage);
 	return (temp);
 }
@@ -101,9 +109,8 @@ char	*get_next_line(int fd)
 	static_storage = ft_fill_string(fd, static_storage);
 	if (!static_storage)
 	{
-		free (static_storage);
-		return (NULL);
-	}
+		return (free (static_storage), NULL);
+	}	
 	line = ft_cleanup_string(static_storage);
 	static_storage = ft_store_string(static_storage);
 	return (line);
@@ -114,12 +121,11 @@ char	*get_next_line(int fd)
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
 
-	for (int i = 0; i < 5; i++){
-	printf("LINE %d: ", i);
+	for (int i = 0; i < 1; i++){
+	//printf("LINE %d: ", i);
 	s = get_next_line(fd);
 	printf("%s", s);
 	free(s);
 	}
 	return (0);
-}
-*/
+}*/
