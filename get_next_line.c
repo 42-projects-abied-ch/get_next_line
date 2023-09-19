@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/19 13:03:33 by codespace        ###   ########.fr       */
+/*   Updated: 2023/09/19 15:19:32 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static char	*ft_fill_string(int fd, char *static_storage)
 			return (NULL);
 		}
 		buffer[buffer_read] = '\0';
-		static_storage = ft_strjoin(static_storage, buffer);
+		if (buffer)
+			static_storage = ft_strjoin(static_storage, buffer);
 	}
 	free(buffer);
 	return (static_storage);
@@ -99,13 +100,19 @@ char	*get_next_line(int fd)
 		return (NULL);
 	static_storage = ft_fill_string(fd, static_storage);
 	if (!static_storage)
+	{
+		free (static_storage);
 		return (NULL);
+	}
 	line = ft_cleanup_string(static_storage);
 	static_storage = ft_store_string(static_storage);
-	return (line);
+	if (line)
+		return (line);
+	else
+		return (free(line), NULL);
 }
 
-/*int	main(void)
+int	main(void)
 {
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
@@ -118,4 +125,3 @@ char	*get_next_line(int fd)
 	}
 	return (0);
 }
-*/
