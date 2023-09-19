@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:25:27 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/19 13:41:32 by codespace        ###   ########.fr       */
+/*   Updated: 2023/09/19 13:47:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ char	*ft_strjoin(char *st_sto, char *buf)
 	dest = malloc((ft_strlen(st_sto) + ft_strlen(buf) + 1) * sizeof(char));
 	if (!dest)
 		return (free(st_sto), NULL);
-	if (st_sto)
-		while (st_sto[++i])
-			dest[i] = st_sto[i];
+	while (st_sto[++i])
+		dest[i] = st_sto[i];
 	while (buf[j])
 		dest[i++] = buf[j++];
 	dest[ft_strlen(st_sto) + ft_strlen(buf)] = '\0';
