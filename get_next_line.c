@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/19 15:56:49 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/19 14:02:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,19 @@ static char	*ft_store_string(char *static_storage)
 	while (static_storage[i] != '\n' && static_storage[i])
 		i++;
 	if (!static_storage[i])
-		return (free(static_storage), NULL);
+	{
+		free (static_storage);
+		return (NULL);
+	}
 	temp = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!temp)
-		return (free(static_storage), NULL);
+		return (NULL);
 	j = 0;
 	i++;
 	while (static_storage[i])
 		temp[j++] = static_storage[i++];
 	temp[j] = '\0';
 	free(static_storage);
-	if (!temp)
-		return (free(temp), NULL);
 	return (temp);
 }
 
@@ -105,15 +106,10 @@ char	*get_next_line(int fd)
 	}
 	line = ft_cleanup_string(static_storage);
 	static_storage = ft_store_string(static_storage);
-	if (!static_storage)
-		return (free(static_storage), NULL);
-	if (line)
-		return (line);
-	else
-		return (free(line), NULL);
+	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
@@ -126,3 +122,4 @@ int	main(void)
 	}
 	return (0);
 }
+*/
