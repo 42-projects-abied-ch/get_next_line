@@ -6,7 +6,7 @@
 /*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:25:27 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/14 16:08:50 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/19 13:13:57 by abied-ch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	ft_strlen(char *s)
 
 	i = 0;
 	if (!s)
-		return (NULL);
+		return (0);
 	while (s[i])
 		i++;
 	return (i);
