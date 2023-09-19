@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:25:27 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/19 13:13:57 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/19 12:58:48 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char *static_storage, char *buffer)
+char	*ft_strjoin(char *st_sto, char *buf)
 {
 	char	*dest;
 	size_t	j;
@@ -32,23 +32,23 @@ char	*ft_strjoin(char *static_storage, char *buffer)
 
 	i = -1;
 	j = 0;
-	if (!static_storage)
+	if (!st_sto)
 	{
-		static_storage = malloc(1 * sizeof(char));
-		static_storage[0] = '\0';
+		st_sto = malloc(1 * sizeof(char));
+		st_sto[0] = '\0';
 	}
-	if (!static_storage || !buffer)
+	if (!st_sto || !buf)
 		return (NULL);
-	dest = malloc((ft_strlen(static_storage) + ft_strlen(buffer) + 1) * sizeof(char));
+	dest = malloc((ft_strlen(st_sto) + ft_strlen(buf) + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);
-	if (static_storage)
-		while (static_storage[++i])
-			dest[i] = static_storage[i];
-	while (buffer[j])
-		dest[i++] = buffer[j++];
-	dest[ft_strlen(static_storage) + ft_strlen(buffer)] = '\0';
-	free(static_storage);
+	if (st_sto)
+		while (st_sto[++i])
+			dest[i] = st_sto[i];
+	while (buf[j])
+		dest[i++] = buf[j++];
+	dest[ft_strlen(st_sto) + ft_strlen(buf)] = '\0';
+	free(st_sto);
 	return (dest);
 }
 

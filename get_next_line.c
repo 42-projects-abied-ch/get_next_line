@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abied-ch <abied-ch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 18:22:45 by abied-ch          #+#    #+#             */
-/*   Updated: 2023/09/19 13:46:13 by abied-ch         ###   ########.fr       */
+/*   Updated: 2023/09/19 13:03:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,18 @@ static char	*ft_cleanup_string(char *static_storage)
 	char	*clean;
 
 	i = 0;
-	if (!static_storage[i])
+	if (!static_storage[i] || !static_storage)
 		return (NULL);
-	while (static_storage[i] != '\0' && static_storage[i] != '\n')
+	while (static_storage[i] && static_storage[i] != '\n')
 		i++;
-	clean = malloc((i + 2) * sizeof(char));
+	if (static_storage[i] == '\n')
+		i++;
+	clean = malloc((i + 1) * sizeof(char));
 	if (!clean)
 		return (NULL);
-	i = 0;
-	while (static_storage[i] != '\n' && static_storage[i] != '\0')
-	{
+	i = -1;
+	while (static_storage[++i] != '\n' && static_storage[i])
 		clean[i] = static_storage[i];
-		i++;
-	}
 	if (static_storage[i] == '\n')
 	{
 		clean[i] = static_storage[i];
@@ -106,7 +105,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int fd = open("empty.txt", O_RDONLY);
 	char *s = "";
@@ -119,3 +118,4 @@ int	main(void)
 	}
 	return (0);
 }
+*/
