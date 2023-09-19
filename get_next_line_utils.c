@@ -12,13 +12,13 @@
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(char *s)
 {
 	size_t	i;
 
 	i = 0;
 	if (!s)
-		return (0);
+		return (NULL);
 	while (s[i])
 		i++;
 	return (i);
@@ -55,7 +55,7 @@ char	*ft_strjoin(char *static_storage, char *buffer)
 char	*ft_strchr(char *s, int c)
 {
 	if (!s)
-		return (0);
+		return (NULL);
 	while (*s)
 	{
 		if (*s == c)
@@ -64,5 +64,5 @@ char	*ft_strchr(char *s, int c)
 	}
 	if (c == '\0')
 		return ((char *)s);
-	return (0);
+	return (NULL);
 }
